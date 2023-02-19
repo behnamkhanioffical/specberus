@@ -1,0 +1,26 @@
+name: Lint JS
+
+on:
+  push:
+    paths:
+      - '**/*.js'
+      - 'package.json'
+  pull_request:
+    paths:
+      - '**/*.js'
+      - 'package.json'
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v3
+        with:
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run lint
